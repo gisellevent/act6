@@ -45,16 +45,19 @@ document.write("El número de días de trabajo dado un presupuesto fijo es: ", d
 //El descuento siempre se pasa como un número, donde 42% se convierte en 0.42. 
 //El resultado debe redondearse al número entero más próximo.
 
-function priceWithMonthlyDiscount(dias, tasa, descuento)
-{
-    
-    const horastotal = dias * 8;
+function priceWithMonthlyDiscount(tarifahora, dias, descuento) {
+    let meses = Math.floor(dias / 22);
+    let almes = dayRate(tarifahora) * 22;
+    let mesescondescuento = almes * meses - almes * meses * descuento;
+    let diasrestantes = dayRate(tarifahora) * (dias % 22);
+  
+    if (descuento === 0) {
+      return Math.round(dayRate(tarifahora) * dias);
+    } else {
+      return Math.ceil(mesescondescuento + diasrestantes);
+    }
+  }
 
-    const tasaDesceunto = tasa * (1 - descuento);
-
-    const prectiototal = Math.round(horastotal * tasaDesceunto);
-    return prectiototal;
-}
 
 document.write("<br>")
 document.write("La tasa de descuento para grandes proyectos es: ", priceWithMonthlyDiscount(89, 230, 0.42));
